@@ -1,4 +1,4 @@
-# PyGeoGebra
+# KingPaint
 
 I like GeoGebra(https://www.geogebra.org/calculator).
 

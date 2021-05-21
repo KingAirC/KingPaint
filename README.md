@@ -1,11 +1,10 @@
 # KingPaint
+Provide the simplest way to paint interactively.
 
-I like GeoGebra(https://www.geogebra.org/calculator).
+This lib is used to learn 2 dimension analytic geometry and plane geometry.
 
-I like Python too.
+The main function such as: triangle, circle, conic, line, etc.
 
-So, I want a GeoGebra writen in Python. I named it PyGeoGebra.
+You can extend this lib easy.
 
-https://github.com/KingAirC/PyGeoGebra
-https://github.com/KingAirC/PyGeoGebraExamples
-https://pypi.org/project/PyGeoGebra/
+You can learn this lib at: https://github.com/KingAirC/KingPaintExamples

@@ -15,7 +15,9 @@ class KingAnimation:
     interval : Time interval.
     See FuncAnimation.
     """
+
     def __init__(self, artists, essential_data_generators, frames=linspace(0, 10, 101), interval=50):
+        KingFigure().update()
         self.artists = artists
         self.essential_data_generators = essential_data_generators
         self.frames = frames
@@ -30,6 +32,7 @@ class KingAnimation:
         result = []
 
         for i in range(self.count):
-            result.extend(self.artists[i].update_affected(new_essential_data=self.essential_data_generators[i](frame)))
-
+            result.extend(self.artists[i].update_affected(new_essential_data=self.essential_data_generators[i](frame),
+                                                          repaint=False))
+        KingFigure().update()
         return result

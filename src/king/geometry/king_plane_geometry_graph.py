@@ -12,7 +12,7 @@ class KingPoint(KingCurve):
         self.set_markerfacecolor('blue')
         self.set_markeredgecolor('black')
 
-    def calc_essential_data_by_delta(self, delta):
+    def calc_essential_data_by_delta(self, delta, new_data):
         return [self.basic_data[0] + delta[0], self.basic_data[1] + delta[1]]
 
     def generate_xy_data_from_basic_data(self):

@@ -310,8 +310,3 @@ def is_object_in_class_list(o, cls_list):
         if isinstance(o, i):
             return True
     return False
-
-
-def get_xy_data_near_curve(x, y, x_data, y_data, epsilon):
-    # TODO: get_xy_data_near_curve
-    return

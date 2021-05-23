@@ -65,12 +65,6 @@ def point_intersect_by_two_line(depends=(), essential_data=None):
 
 
 @geometry_generate(cls=KingPoint)
-def point_on_curve(depends=(), essential_data=None):
-    # TODO: point_on_curve
-    return [nan, nan]
-
-
-@geometry_generate(cls=KingPoint)
 def point_conic_symmetry_center(depends=(), essential_data=None):
     center = get_conic_symmetry_center(*depends[0].basic_data)
     if center is None:

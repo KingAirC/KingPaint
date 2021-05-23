@@ -131,15 +131,16 @@ class KingGeometry(metaclass=abc.ABCMeta):
             KingFigure().update()
         return result
 
-    def calc_essential_data_by_delta(self, delta):
+    def calc_essential_data_by_delta(self, delta, new_data):
         """
             Calculate essential data by delta.
         :param delta:
+        :param new_data:
         :return: essential data
         """
         return self._essential_data
 
-    def translation(self, delta):
+    def translation(self, delta, new_data):
         """
             Translation method. It can translation by mouse if and only if the depends geometry has no depends.
             Parameters
@@ -156,7 +157,7 @@ class KingGeometry(metaclass=abc.ABCMeta):
             if a.calc_essential_data_by_delta is None:
                 esd = None
             else:
-                esd = a.calc_essential_data_by_delta(delta)
+                esd = a.calc_essential_data_by_delta(delta, new_data)
             a.update_self(esd)
             a.searched = True
         for b in ready2update:

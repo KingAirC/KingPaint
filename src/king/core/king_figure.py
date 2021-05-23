@@ -136,7 +136,7 @@ class KingFigure:
         delta_y = event.ydata - self.old_y
         self.old_x = event.xdata
         self.old_y = event.ydata
-        self.is_selected_geometry.translation((delta_x, delta_y))
+        self.is_selected_geometry.translation((delta_x, delta_y), (event.xdata, event.ydata))
         self.update()
 
     def on_button_release(self, event):

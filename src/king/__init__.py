@@ -22,6 +22,7 @@ from .geometry.king_function import *
 from .geometry.king_parametric_equation import *
 from .geometry.king_plane_geometry_graph import *
 from .geometry.king_plane_geometry_graph_generator import *
+from .geometry.king_point_on_curve import point_on_curve
 from .geometry.king_regular_polygon import *
 from .geometry.king_triangle_center_generator import outer as ot
 from .geometry.king_triangle_center_generator import median as md
@@ -31,22 +32,22 @@ from .geometry_attribute.affine import *
 from .geometry_attribute.angle import *
 from .geometry_attribute.distance import *
 
-__all__ = ['alg', 'core', 'geometry', 'geometry_attribute']
+__all__ = ['alg', 'core', 'geometry', 'geometry_attribute', 'asymptote', 'circle', 'conic', 'ellipse', 'equation',
+           'function', 'hyperbola', 'incenter', 'intersect', 'line', 'line_segment', 'median', 'middle', 'orthocenter',
+           'outer', 'parabola', 'parametric_equation', 'point', 'regular_polygon', 'rotate', 'symmetric',
+           'symmetry_center', 'symmetry_lines', 'tangent_line', 'vertical']
 conic_class_list = [KingConic, KingCircle, KingEllipse, KingHyperbola, KingParabola]
 figure = KingFigure()
 p_nan = KingPoint(essential_data=[nan, nan])
 
 
-def point(x=None, y=None, p_list=None, label=None, color=None, from_number=1):
+def point(x=None, y=None, p_list=None, label=None, color=None, from_number=1, curve=None,
+          x_min=None, x_max=None, y_min=None, y_max=None):
+    if isinstance(curve, KingCurve):
+        return point_on_curve(curve, x_min=x_min, x_max=x_max, y_min=y_min, y_max=y_max)
     if x is not None and y is not None:
         p = KingPoint(essential_data=[x, y])
-        if label is not None:
-            p.text.set_text(label)
-        if color is not None:
-            p.set_markerfacecolor(color)
-            p.set_markeredgecolor(color)
-        return p
-    if p_list is not None:
+    elif p_list is not None:
         ps = []
         for i in p_list:
             ps.append(KingPoint(essential_data=i))
@@ -58,6 +59,14 @@ def point(x=None, y=None, p_list=None, label=None, color=None, from_number=1):
                 p.set_markerfacecolor(color)
                 p.set_markeredgecolor(color)
         return ps
+    else:
+        p = None
+    if label is not None:
+        p.text.set_text(label)
+    if color is not None:
+        p.set_markerfacecolor(color)
+        p.set_markeredgecolor(color)
+    return p
 
 
 def line(p1=None, p2=None, k=None, b=None, A=None, B=None, C=None):

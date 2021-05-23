@@ -1,5 +1,5 @@
 from .basic_alg import sqrt, get_main_element_index_list, real_root_tow_power_equation, det, \
-    is_same_negative_or_positive, nan, rref, eig_n, pi_half
+    is_same_negative_or_positive, nan, rref, eig_n, pi_half, is_zero
 from .circle_alg import get_circle_equation_coefficient_by_center_radius
 from .plane_geometry_alg import get_rotate_point_by_two_point
 from .parabola_alg import get_parabola_equation_coefficient_by_focus_line
@@ -286,11 +286,21 @@ def get_conic_type_simply_equation(a11, a12, a22, a1, a2, a0):
     I2 = get_conic_I2(a11, a12, a22, a1, a2, a0)
     I3 = get_conic_I3(a11, a12, a22, a1, a2, a0)
 
+    if is_zero(I2):
+        if is_zero(I3):
+            K1 = get_conic_K1(a11, a12, a22, a1, a2, a0)
+            if is_zero(K1):
+                return [CONIC_TYPE_LINE, [0, 0, 1, 0, 0, 0]]
+            if K1 < 0:
+                return [CONIC_TYPE_PARALLEL_LINE, [0, 0, 1, 0, 0, K1 / (I1 ** 2)]]
+            if K1 > 0:
+                return [CONIC_TYPE_CAN_NOT_PLOT]
+        return [CONIC_TYPE_PARABOLA, [0, 0, I1, 2 * (-I3 / I1) ** (1 / 2), 0, 0]]
     if I2 > 0:
         same_symbol = is_same_negative_or_positive(I1, I3)
         if same_symbol is not None:
             return [CONIC_TYPE_CAN_NOT_PLOT]
-        if I3 == 0:
+        if is_zero(I3):
             return [CONIC_TYPE_POINT]
         roots = real_root_tow_power_equation(1, -I1, I2)
         if len(roots) == 1:
@@ -303,14 +313,6 @@ def get_conic_type_simply_equation(a11, a12, a22, a1, a2, a0):
         corr = [root_1, 0, root_2, 0, 0, I3 / I2]
         conic_type = CONIC_TYPE_INTERSECT_LINE if I3 == 0 else CONIC_TYPE_HYPERBOLA
         return [conic_type, corr]
-    if I3 == 0:
-        K1 = get_conic_K1(a11, a12, a22, a1, a2, a0)
-        if K1 < 0:
-            return [CONIC_TYPE_PARALLEL_LINE, [0, 0, 1, 0, 0, K1 / (I1 ** 2)]]
-        if K1 > 0:
-            return [CONIC_TYPE_CAN_NOT_PLOT]
-        return [CONIC_TYPE_LINE, [0, 0, 1, 0, 0, 0]]
-    return [CONIC_TYPE_PARABOLA, [0, 0, I1, 2 * (-I3 / I1) ** (1 / 2), 0, 0]]
 
 
 def intersect_line_conic(x1, y1, x2, y2, a11, a12, a22, a1, a2, a0):
@@ -386,7 +388,7 @@ def conic_tangent_vector(x0, y0, a11, a12, a22, a1, a2, a0):
     fx0y0 = get_conic_value_by_point(x0, y0, a11, a12, a22, a1, a2, a0)
     f1x0y0 = a11 * x0 + a12 * y0 + a1
     f2x0y0 = a12 * x0 + a22 * y0 + a2
-    if fx0y0 == 0:
+    if is_zero(fx0y0):
         x = -f2x0y0
         y = f1x0y0
         return [[x, y]]
@@ -398,28 +400,28 @@ def conic_tangent_vector(x0, y0, a11, a12, a22, a1, a2, a0):
     cuv = f1x0y0 * f2x0y0 - fx0y0 * a12
     cv = f2x0y0 ** 2 - fx0y0 * a22
     res = []
-    if cv != 0:
+    if not is_zero(cv):
         roots = real_root_tow_power_equation(cv, 2 * cuv, cu)
         if roots is None:
             return
         if len(roots) == 1:
             fii = fi(1, roots[0])
-            if fii != 0:
+            if not is_zero(fii):
                 res.append([1, roots[0], -(f1x0y0 + roots[0] * f2x0y0) / fii])
                 return res
         fii1 = fi(1, roots[0])
-        if fii1 != 0:
+        if not is_zero(fii1):
             res.append([1, roots[0], -(f1x0y0 + roots[0] * f2x0y0) / fii1])
         fii2 = fi(1, roots[1])
-        if fii2 != 0:
+        if not is_zero(fii2):
             res.append([1, roots[1], -(f1x0y0 + roots[1] * f2x0y0) / fii2])
         return res
-    if cuv != 0:
+    if not is_zero(cuv):
         fii1 = fi(0, 1)
-        if fii1 != 0:
+        if not is_zero(fii1):
             res.append([0, 1, -f2x0y0 / fii1])
         fii2 = fi(-2 * cuv, cu)
-        if fii2 != 0:
+        if not is_zero(fii2):
             res.append([-2 * cuv, cu, -(-2 * cuv * f1x0y0 + cu * f2x0y0) / fii2])
         return res
     return

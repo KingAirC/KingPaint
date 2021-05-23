@@ -44,8 +44,8 @@ p_nan = KingPoint(essential_data=[nan, nan])
 def point(x=None, y=None, p_list=None, label=None, color=None, from_number=1, curve=None,
           x_min=None, x_max=None, y_min=None, y_max=None):
     if isinstance(curve, KingCurve):
-        return point_on_curve(curve, x_min=x_min, x_max=x_max, y_min=y_min, y_max=y_max)
-    if x is not None and y is not None:
+        p = point_on_curve(curve, x_min=x_min, x_max=x_max, y_min=y_min, y_max=y_max)
+    elif x is not None and y is not None:
         p = KingPoint(essential_data=[x, y])
     elif p_list is not None:
         ps = []
